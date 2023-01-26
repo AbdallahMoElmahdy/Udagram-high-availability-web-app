@@ -5,6 +5,14 @@ Parameters:
   EnvironmentName:
     Description: An environment name that will prefixed to resource names
     Type: String
+  minSize:
+    Description: An environment name that will prefixed to resource names
+    Type: String
+    Default: 4
+  maxSize:
+    Description: An environment name that will prefixed to resource names
+    Type: String
+    Default: 8
 
 Resources:
   S3Role:
@@ -87,11 +95,12 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           apt-get update -y
+          apt-get install unzip awscli -y
           apt-get install apache2 -y
           systemctl enable apache2.service
           systemctl start apache2.service
           cd /var/www/html
-          echo "it works! Udagram, Udacity" > index.html
+          aws s3 cp s3://udagram-749574599756/index.html .
       ImageId: ami-08fdec01f5df9998f
       IamInstanceProfile: !Ref RoleInstanceProfile
       SecurityGroups:
@@ -109,8 +118,8 @@ Resources:
         - Fn::ImportValue: !Sub '${EnvironmentName}-PRIV-NETS'
       LaunchConfigurationName:
         Ref: WebAppLaunchConfig
-      MinSize: '4'
-      MaxSize: '8'
+      MinSize: !Ref minSize
+      MaxSize: !Ref maxSize
       TargetGroupARNs:
         - Ref: WebAppTargetGroup
 
