@@ -2,7 +2,7 @@
 Welcome to Udacity cloud devops second project!
 
 ## Project diagram
-![Project diagram](images/Udagram udacity project diagram.png)
+![Project diagram](https://github.com/AbdallahMoElmahdy/Udagram-high-availability-web-app/blob/master/images/Udagram%20udacity%20project%20diagram.png)
 
 ## To run the project for the first time
 ```
